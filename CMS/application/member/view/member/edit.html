@@ -1,0 +1,80 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">编辑会员</div>
+    <div class="layui-card-body">
+        <form class="layui-form" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="用户名" class="layui-input" value="{$data.username}" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="realname" lay-verify="required" autocomplete="off" placeholder="昵称" class="layui-input" value="{$data.realname}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-inline">
+                    <select class="select" style="width: 150px; height: 31px;" name="sex">
+                        <option value="0" {eq name="$data.sex" value="0" }selected{/eq} >男</option>
+                        <option value="1" {eq name="$data.sex" value="1" }selected{/eq} >女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">玩家类型</label>
+                <div class="layui-input-inline">
+                    <select class="select" style="width: 150px; height: 31px;" name="gtype">
+                        <option value="0" {eq name="$data.gtype" value="0" }selected{/eq} >玩家</option>
+                        <option value="1" {eq name="$data.gtype" value="1" }selected{/eq} >机器人</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">电话</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="telephone" lay-verify="required" autocomplete="off" placeholder="电话" class="layui-input" value="{$data.telephone}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="email|required" autocomplete="off" placeholder="邮箱" class="layui-input" value="{$data.email}">
+                </div>
+            </div>
+           <!-- <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password"  autocomplete="off" placeholder="密码" class="layui-input" value="{$data.password}">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">保险箱密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="bankpassword" autocomplete="off" placeholder="保险箱密码" class="layui-input" value="{$data.bankpassword}">
+                </div>
+            </div> -->
+            <div class="layui-form-item">
+                <label class="layui-form-label">是否封号</label>
+                <div class="layui-input-inline">
+                    <select class="select" style="width: 150px; height: 31px;" name="genable">
+                        <option value="0" {eq name="$data.genable" value="0" }selected{/eq} >封号</option>
+                        <option value="1" {eq name="$data.genable" value="1" }selected{/eq} >正常</option>
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="uid" value="{$data.uid}">
+            <div class="layui-form-item">
+                <div>
+                    <button class="layui-btn" lay-submit lay-filter="formSubmit">立即提交</button>
+                    <button class="layui-btn layui-btn-normal" type="button" onclick="javascript:history.back(-1);">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{/block}

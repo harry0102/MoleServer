@@ -1,0 +1,133 @@
+{extend name="admin@index_layout"/}
+{block name="main"}
+<div class="layui-card">
+    <div class="layui-card-header">游戏记录</div>
+    <div class="layui-card-body">
+        <blockquote class="layui-elem-quote quoteBox">
+            <form class="layui-form search-from" method="get">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="username" placeholder="搜索玩家名称">
+                    </div>
+                    <a class="layui-btn search_btn" data-type="reload" id="search_name">搜索</a>
+                </div>
+                <div class = "layui-inline">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所属游戏</label>
+                        <div class="layui-input-inline">
+                            <select name="gameid" id="gameid" lay-verify="required" lay-filter="gameid">
+                                {volist name="games" id="vo"}
+                                <option value="{$vo['id']}">{$vo['name']}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <label class="layui-form-label">所属房间</label>
+                        <div class="layui-input-inline">
+                            <select name="roomid" id="roomid" lay-verify="required">
+                                {volist name="servers" id="servervo"}
+                                <option value="{$servervo['id']}">{$servervo['servername']}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                        <a class="layui-btn search_btn" data-type="reload" id="search_room">搜索</a>
+                    </div>
+                </div>
+            </form>
+        </blockquote>
+        <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm layui-btn-danger confirm layui-batch-all" data-href='{:url("delete")}' isMember="0">批量删除</a>
+    </div>
+</script>
+<script type="text/html" id="barTool">
+    <a href='{:url("delete")}?ids={{ d.id }}' class="layui-btn layui-btn-danger layui-btn-xs layui-tr-del">删除</a>
+</script>
+{/block}
+{block name="script"}
+<script>
+layui.use('table', function() {
+    var table = layui.table,
+        $ = layui.$,
+        form = layui.form;
+    table.render({
+        elem: '#dataTable',
+        toolbar: '#toolbarDemo',
+        url: '{:url("manage")}',
+        cols: [
+            [
+                { type: 'checkbox', fixed: 'left' },
+                { field: 'id', width: 80, title: 'ID' },
+                { field: 'username', width: 80, title: '玩家名' },
+                { field: 'name', width: 150,title: '游戏名称' },
+                { field: 'roomname', width: 150, title: '所在房间' },
+                { field: 'tableindex', width: 80, title: '桌子号' },
+                { field: 'chairindex', width: 80, title: '椅子号' },
+                { field: 'score',  title: '金币' },
+                { field: 'revenue', width: 100, title: '税收' },
+                { field: 'lastmoney', width: 100,title: '最近金币' },
+                { field: 'agentmoney', width: 100, title: '佣金' },
+                { field: 'curjetton', width: 100, title: '当前下注' },
+                { field: 'gametip', width: 150, title: '注释' },
+                { field: 'collectdate', width: 150, title: '时间' },
+                { fixed: 'right', width: 120, title: '操作', templet: '#barTool' }
+            ]
+        ],
+        page: {}
+    });
+
+    $("#search_name").on("click", function() {
+        table.reload("dataTable", {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                username: $("#username").val()
+            }
+        })
+    });
+
+    $("#search_room").on("click", function() {
+        table.reload("dataTable", {
+            page: {
+                curr: 1 //重新从第 1 页开始
+            },
+            where: {
+                gameid: $("#gameid").val(),
+                roomid: $("#roomid").val()
+            }
+        })
+    });
+
+    form.on('select(gameid)', function(data) {
+        $.post(
+            '{:url("gamerecord/getgamerooms")}',
+            {
+                game_id:data.value
+            },
+            function(d){
+                var server = document.getElementById("roomid");
+                var selectOptions = server.options;
+                var optionLength = selectOptions.length;
+                for(var i=0;i <optionLength;i++)
+                {
+                    server.removeChild(selectOptions[0]);
+                }
+
+                var xqo = eval('(' + d + ')');
+                for(var i in xqo){
+                    var option = document.createElement("option");  // 创建添加option属性
+                    option.setAttribute("value",xqo[i].id); // 给option的value添加值
+                    option.innerText=xqo[i].servername;     // 打印option对应的纯文本
+                    server.appendChild(option);           //给select添加option子标签
+                }
+
+                form.render("select");            // 刷性select，显示出数据
+            }
+        );
+    });
+});
+</script>
+{/block}
