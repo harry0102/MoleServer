@@ -66,19 +66,3 @@ port=3306
 11. 网站后台管理采用YznCMS,YznCMS基于thinkphp写成，二次开发简单快捷，具体安装方法在CMS目录下的readme文件中，后台初始用户名和密码都为admin，网站的配置说明在CMS目录下。因此在使用本框架之前最好先安装好LAMP环境。
 12. 有关于xredis的使用方法，请参考：https://gitee.com/0xsky/xredis
 
-#### 联系作者
-欢迎加QQ群交流:131296225
-email:akinggw@126.com
-
-[截图预览]  
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/net1.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/net2.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/net4.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/screen66.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/screen111.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/screen201.jpg)
-![输入图片说明](https://gitee.com/akinggw/moleserver/raw/master/screen/screen202.jpg)
-
-[游戏测试]  
- [demo](http://akinggw.gitee.io/moleserver)   
-
